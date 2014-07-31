@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    <!-- Report Data Declaration -->
+    
+    
+    <!-- Sale Order -->
+    <report 
+		auto="False" 
+		id="sale.report_sale_order" 
+		model="sale.order" 
+		name="sale.order.inherit" 
+		rml="lc5_report_customizations/report/sale_order.rml" 
+		string="Quotation / Order"
+	/>
+	
+
+    <!-- Purchase Order -->
+    <report 
+		auto="False" 
+		id="purchase.report_purchase_order" 
+		model="purchase.order" 
+		name="purchase.order" 
+		rml="lc5_report_customizations/report/purchase_order.rml" 
+		string="Purchase Order"
+	/>
+	
+    <!-- Purchase Quotation -->
+    <report 
+		auto="False" 
+		id="purchase.report_purchase_quotation" 
+		model="purchase.order" 
+		name="purchase.quotation" 
+		rml="lc5_report_customizations/report/purchase_quotation.rml" 
+		string="Request for Quotation"
+	/>
+
+   
+   	<!-- Invoice -->
+        <report
+            auto="False"
+            id="account.account_invoices"
+            model="account.invoice"
+            name="account.invoice"
+            rml="lc5_report_customizations/report/invoice.rml"
+            string="Invoices"
+            attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
+            attachment_use="True"
+            usage="default"
+            />    
+    
+    <!-- Delivery Order -->
+		<report id="report_delivery_order" model="stock.picking.out" name="picking.out.delivery.order"
+	rml="lc5_report_customizations/report/delivery_order.rml" string="Delivery Order"/>
+	        <report
+            id="delivery.report_shipping"
+            model="stock.picking"
+            name="sale.shipping"
+            multi="True"
+            rml="lc5_report_customizations/report/delivery_order.rml"
+            string="Delivery Order"/>
+    
+    <!-- Deliver receipt -->
+	<delete model="ir.actions.report.xml" search="[('report_name','in',['picking.out.delivery.receipt']), ('model','=','stock.picking.out')]" />  
+    
+    	<report id="report_delivery_receipt" model="stock.picking.out" name="picking.out.delivery.receipt"
+	rml="lc5_report_customizations/report/delivery_receipt.rml" string="Delivery Receipt"/>    
+	
+		 <record model="ir.ui.view" id="inherit_view_delivery_order_inherit_stock_form_view">
+                <field name="name">stock.picking.out.form</field>
+                <field name="model">stock.picking.out</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="delivery.view_delivery_order_inherit_stock"/>
+                <field name="arch" type="xml">
+                    <button name="%(delivery.report_shipping)d" string="Print Delivery Order" states="confirmed,assigned" type="action" position="after">
+                    
+	                 <button name="%(report_delivery_receipt)d" string="Print Delivery Receipt" states="confirmed,assigned" type="action"/>
+	                 <button name="%(report_delivery_receipt)d" string="Print Delivery Receipt" states="done" type="action" class="oe_highlight"/>
+                    
+					</button>         
+
+                </field>
+            </record>    
+
+	<delete model="ir.actions.report.xml" search="[('report_name','in',['sale.shipping.inherit']), ('model','=','stock.picking')]" />  
+            
+            
+        <report
+            id="delivery.report_shipping"
+            model="stock.picking"
+            name="sale.shipping.inherit"
+            multi="True"
+            rml="lc5_report_customizations/report/delivery_order.rml"
+            string="Delivery Order"
+		/>
+            
+    <!-- Equipment Transfer -->
+	<!--delete model="ir.actions.report.xml" search="[('report_name','in',['stock.picking.rndCumqv']), ('model','=','stock.picking')]" />  
+	
+    	<report id="report_equipment_transfer" model="stock.picking" name="picking.equipment.transfer"
+	rml="lc5_report_customizations/report/equipment_transfer.rml" string="Equipment Transfer"/-->      
+    </data>
+</openerp>

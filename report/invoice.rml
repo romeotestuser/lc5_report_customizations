@@ -300,13 +300,7 @@
     <images/>
   </stylesheet>
   <story>
-    <blockTable colWidths="543.0" style="Table23">
-      <tr>
-        <td>
-          <para style="Title Heading">Sales Invoice</para>
-        </td>
-      </tr>
-    </blockTable>
+
     <!--xpre style="terp_default_8">
       <font color="white"> </font>
     </xpre-->
@@ -315,6 +309,13 @@
     </xpre-->
     <xpre style="terp_default_8">[[repeatIn(objects,'o')]]</xpre>
     <xpre style="terp_default_8">[[ setLang(o.partner_id.lang) ]]</xpre>
+    <blockTable colWidths="543.0" style="Table23">
+      <tr>
+        <td>
+          <para style="Title Heading">Sales Invoice</para>
+        </td>
+      </tr>
+    </blockTable>    
     <blockTable colWidths="539.0" style="Table19">
       <tr>
         <td>
@@ -559,27 +560,27 @@
 	<blockTable colWidths="540.0" style="Table10">
 		<tr>
 			<td>
-				<para style="terp_default_8"><font face="Helvetica-Bold">Terms of Payment:</font> [[ o.terms_of_payment_id.name or removeParentNode('tr') ]]</para>
+				<para style="terp_default_8"><font face="Helvetica-Bold">Terms of Payment:</font><font face="Helvetica"> [[ o.terms_of_payment_id.name or removeParentNode('tr') ]]</font></para>
 			</td>
 		</tr>
 		<tr>
 			<td>          
-				<para style="terp_default_8"><font face="Helvetica-Bold">Payment Method:</font> [[ o.payment_method_id.name or removeParentNode('tr') ]]</para>
+				<para style="terp_default_8"><font face="Helvetica-Bold">Payment Method:</font><font face="Helvetica"> [[ o.payment_method_id.name or removeParentNode('tr') ]]</font></para>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<para style="terp_default_8"><font face="Helvetica-Bold">Warranty:</font> [[ o.warranty_id.name or removeParentNode('tr') ]]</para>
+				<para style="terp_default_8"><font face="Helvetica-Bold">Warranty:</font><font face="Helvetica"> [[ o.warranty_id.name or removeParentNode('tr') ]]</font></para>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<para style="terp_default_8"><font face="Helvetica-Bold">Delivery Lead Time:</font> [[ o.delivery_lead_time_id.name or removeParentNode('tr') ]]</para>
+				<para style="terp_default_8"><font face="Helvetica-Bold">Delivery Lead Time:</font><font face="Helvetica"> [[ o.delivery_lead_time_id.name or removeParentNode('tr') ]]</font></para>
 			</td>
 		</tr>  
 		<tr>
 			<td>
-				<para style="terp_default_8"><font face="Helvetica-Bold">Sales Person:</font> [[ o.user_id.name or removeParentNode('tr') ]]</para>
+				<para style="terp_default_8"><font face="Helvetica-Bold">Sales Person:</font><font face="Helvetica"> [[ o.user_id.name or removeParentNode('tr') ]]</font></para>
 			</td>
 		</tr>                  
 	</blockTable>        

@@ -37,6 +37,8 @@
 
    
    	<!-- Invoice -->
+	<delete model="ir.actions.report.xml" search="[('report_name','in',['account.invoice']), ('model','=','account.invoice')]" />  
+   	
         <report
             auto="False"
             id="account.account_invoices"
@@ -45,7 +47,6 @@
             rml="lc5_report_customizations/report/invoice.rml"
             string="Invoices"
             attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
-            attachment_use="True"
             usage="default"
             />    
     

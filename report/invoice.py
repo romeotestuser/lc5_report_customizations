@@ -36,6 +36,7 @@ class account_invoice(report_sxw.rml_parse):
         })
 		
     def _get_product_line_number(self,data,context=None):
+        print "_get_product_line_number".upper()
         cr = self.cr
         #intigrate fetching of bundle items
         res = [(x+1,obj) for x,obj in enumerate(data)]

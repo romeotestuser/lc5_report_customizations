@@ -43,7 +43,7 @@ class shipping(report_sxw.rml_parse):
     def _get_product_line_number(self,data,context=None):
         cr = self.cr
         #intigrate fetching of bundle items
-        res = [(x+1,obj) for x,obj in enumerate(data)]
+        res = [(obj.line_number,obj) for x,obj in enumerate(data)]
         return res        
 # 
 #report_sxw.report_sxw('report.picking.equipment.transfer','stock.picking','addons/lc5_report_customizations/report/equipment_transfer.rml',parser=shipping)

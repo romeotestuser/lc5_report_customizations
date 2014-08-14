@@ -410,7 +410,7 @@
           <para style="P2">Item</para>
         </td>
         <td>
-          <para style="P2">Product Description</para>
+          <para style="P18">Product Description</para>
         </td>
         <td>
           <para style="P2">Quantity</para>
@@ -431,24 +431,34 @@
           <para style="P17">[[repeatIn(line_number(o.order_line),'line')]]</para>
       
         <td>
-          <para style="P2">
-            <font face="Helvetica">[[ line[0] ]]</font>
-          </para>
+			<para style="P19"><font color="white"> </font></para>
+			<para style="P2">
+				<font face="Helvetica">[[ line[0] ]]</font>
+			</para>
+			<para style="P19"><font color="white"> </font></para>
         </td>
         <td>
-          <para style="P2">[[ line[1].product_id.name ]]</para>
+			<para style="P19"><font color="white"> </font></para>
+			<para style="P1">[[ line[1].product_id.name ]]</para>
+			<para style="P19"><font color="white"> </font></para>
         </td>
         <td>
-          <para style="P2">[[ "%.2f" % line[1].product_uom_qty ]]</para>
+			<para style="P19"><font color="white"> </font></para>
+			<para style="P2">[[ "%.2f" % line[1].product_qty ]]</para>
+			<para style="P19"><font color="white"> </font></para>
         </td>
         <td>
-          <para style="P2">[[ line[1].price_unit or '0.00']]</para>
+			<para style="P19"><font color="white"> </font></para>
+			<para style="P2">[[ line[1].price_unit or '0.00']]</para>
+			<para style="P19"><font color="white"> </font></para>
         </td>
         <!--td>
           <para style="P2">[[ line[1].discount or "0.0" ]]</para>
         </td-->
         <td>
-          <para style="P2">[[ line[1].price_subtotal or '0.00' ]]</para>
+			<para style="P19"><font color="white"> </font></para>
+			<para style="P2">[[ line[1].price_subtotal or '0.00' ]]</para>
+			<para style="P19"><font color="white"> </font></para>
         </td>
       </tr>
     </blockTable>

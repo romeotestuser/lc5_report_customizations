@@ -24,7 +24,7 @@ import time
 from openerp.report import report_sxw
 from openerp.netsvc import Service
 
-for x in ['report.sale.shipping','report.sale.shipping.inherit','report.picking.out.delivery.receipt']:
+for x in ['report.sale.shipping','report.picking.equipment.transfer']:
     try:
         del Service._services[x]
     except:
@@ -36,19 +36,72 @@ class shipping(report_sxw.rml_parse):
         self.localcontext.update({
             'time': time,
             'line_number':self._get_product_line_number,
-            
+            'get_product_bundle_items':self._get_product_bundle_items,
         })
         
+    def _get_product_bundle_items(self,product_id,product_qty,context=None,line_number=None):
+        print "_get_product_bundle_items".upper()
+        cr=self.cr
+        uid = self.uid
+        result=[]
+        #fetch connected product item entries
 
+        cr.execute('select id from product_item where product_id = %s' % product_id)
+        product_item_ids = [x[0] for x in cr.fetchall()]
+        res = self.pool.get('product.item').read(cr,uid,product_item_ids,['item_id','qty_uom','uom_id'])
+        for count,x in enumerate(res):
+            x['qty_uom']=x['qty_uom']*product_qty
+            x['line_number']='.'.join([str(line_number),str(count+1)])
+            result.append(x)
+            temp_res = self._get_product_bundle_items(x['item_id'][0], x['qty_uom'], context,'.'.join([str(line_number),str(count+1)]))
+            result.extend(temp_res)
+#         bundle_product_item_ids = [x[0] for x in cr.fetchall()]
+#         product_dicts=self.pool.get('product.product').read(cr,uid,bundle_product_item_ids,['name'])
+#         bundle_product_names = [product_dict['name'] for product_dict in product_dicts]
+#         res = bundle_product_names
+#         if context and 'mode' in context and context['mode'] == 'all':
+#             res = [product_dict['id'] for product_dict in product_dicts]
+        return result
+    
+#     def produce_line_number
+            
+    def get_components_line(self,datum,count,result=None,context=None):
+        if not datum.child_ids:
+            return []
+        if not result:
+            result=[]
+        for sub_count,x in enumerate(datum.child_ids):
+            result.append('.'.join([str(count),str(sub_count+1)]))
+            if x.child_ids:
+                result.extend(self.get_components_line(x, '.'.join([str(count),str(sub_count+1)]),result))
+        return result
+    
     def _get_product_line_number(self,data,context=None):
         cr = self.cr
         #intigrate fetching of bundle items
-        res = [(obj.line_number,obj) for x,obj in enumerate(data)]
+        #fetch main products (not bundle components)
+        fin_count=[]
+        parent_data = [x for x in data if not x.parent_id]
+        for count,datum in enumerate(parent_data):
+            fin_count.append(count+1)
+            fin_count.extend(self.get_components_line(datum,count+1))
+        res=[]
+        for count,datum in enumerate(data):
+            datum.bundle_items=[]
+            res.append((fin_count[count],datum))
         return res        
+
+
+#     def _get_product_line_number(self,data,context=None):
+#         cr = self.cr
+#         #intigrate fetching of bundle items
+#         res = [(x+1,obj) for x,obj in enumerate(data)]
+#         return res        
 # 
-#report_sxw.report_sxw('report.picking.equipment.transfer','stock.picking','addons/lc5_report_customizations/report/equipment_transfer.rml',parser=shipping)
-report_sxw.report_sxw('report.picking.out.delivery.receipt','stock.picking.out','addons/lc5_report_customizations/report/delivery_receipt.rml',parser=shipping)
-report_sxw.report_sxw('report.picking.out.delivery.order','stock.picking.out','addons/lc5_report_customizations/report/delivery_order.rml',parser=shipping)
-report_sxw.report_sxw('report.sale.shipping.inherit','stock.picking','addons/lc5_report_customizations/report/delivery_order.rml',parser=shipping)
+report_sxw.report_sxw('report.picking.equipment.transfer','stock.picking','addons/glimsol_report/report/equipment_transfer.rml',parser=shipping)
+report_sxw.report_sxw('report.picking.out.delivery.receipt','stock.picking.out','addons/glimsol_report/report/delivery_reciept.rml',parser=shipping)
+report_sxw.report_sxw('report.picking.out.delivery.order','stock.picking.out','addons/glimsol_report/report/delivery_order.rml',parser=shipping)
+
+report_sxw.report_sxw('report.sale.shipping.inherit','stock.picking','addons/glimsol_report/report/delivery_order.rml',parser=shipping)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

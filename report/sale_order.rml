@@ -560,14 +560,12 @@
         </td>
       </tr>
       
-      <!--tr-->
-       	<!--para style="P17">[[ repeatIn(line[1].bundle_items, 'component')]]</para-->
-        <!--td>
-                <para style="P1">
-                  <font color="white"> </font>
-                </para>
-        </td-->
-        <!--td>
+      <tr>
+       	<para style="P17">[[ repeatIn(line[1].bundle_items, 'component')]]</para>
+        <td>
+                <para style="P12">[[ component['line_number'] ]]</para>
+        </td>
+        <td>
           <para style="P12">[[ component['item_id'][1] ]]</para>
         </td>
         <td>
@@ -584,12 +582,9 @@
                 <para style="P1">
                   <font color="white"> </font>
                 </para>        </td>
-        <td>
-                <para style="P1">
-                  <font color="white"> </font>
-                </para>        </td-->       	
+   	
       
-      <!--/tr-->
+      </tr>
       
     </blockTable>
     <blockTable colWidths="539.0" style="Table12">

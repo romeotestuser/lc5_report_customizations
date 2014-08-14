@@ -39,89 +39,34 @@ class order(report_sxw.rml_parse):
             'time': time, 
             'show_discount':self._show_discount,
             'line_number':self._get_product_line_number,
-            'get_down_payment':self._get_down_payment,
-            'get_balance':self._get_balance,
-            'get_monthly_payment':self._get_monthly_payment,
             'get_designation':self._get_designation,
-            'get_product_bundle_items':self._get_product_bundle_items,
+            #'get_product_bundle_items':self._get_product_bundle_items,
         })
         
-
-    def _get_product_bundle_items(self,product_id,product_qty,context=None,line_number=None):
-        cr=self.cr
-        uid = self.uid
-        result=[]
-        #fetch connected product item entries
-
-        cr.execute('select id from product_item where product_id = %s' % product_id)
-        product_item_ids = [x[0] for x in cr.fetchall()]
-        res = self.pool.get('product.item').read(cr,uid,product_item_ids,['item_id','qty_uom','uom_id'])
-        for count,x in enumerate(res):
-            x['qty_uom']=x['qty_uom']*product_qty
-            x['line_number']='.'.join([str(line_number),str(count+1)])
-            result.append(x)
-            temp_res = self._get_product_bundle_items(x['item_id'][0], x['qty_uom'], context,'.'.join([str(line_number),str(count+1)]))
-            result.extend(temp_res)
-#         bundle_product_item_ids = [x[0] for x in cr.fetchall()]
-#         product_dicts=self.pool.get('product.product').read(cr,uid,bundle_product_item_ids,['name'])
-#         bundle_product_names = [product_dict['name'] for product_dict in product_dicts]
-#         res = bundle_product_names
-#         if context and 'mode' in context and context['mode'] == 'all':
-#             res = [product_dict['id'] for product_dict in product_dicts]
-        return result
+    #def _get_product_bundle_items(self,product_id,context=None):
+    #    cr=self.cr
+    #    uid = self.uid
+        #Comment: fetch connected product item entries
+    #    cr.execute('select product_id from product_item where product_id = %s' % product_id)
+    #    bundle_product_item_ids = [x[0] for x in cr.fetchall()]
+    #    product_dicts=self.pool.get('product.product').read(cr,uid,bundle_product_item_ids,['name'])
+    #    bundle_product_names = [product_dict['name'] for product_dict in product_dicts]
+    #    res = bundle_product_names
+    #    if context and 'mode' in context and context['mode'] == 'all':
+    #        res = [product_dict['id'] for product_dict in product_dicts]
+    #    return res
             
 
     def _get_product_line_number(self,data,context=None):
         cr = self.cr
         #intigrate fetching of bundle items
-        for count,datum in enumerate(data):
-            print "datum".upper(),datum
-            datum.bundle_items=self._get_product_bundle_items(datum.product_id.id,datum.product_uom_qty,line_number=count+1)
-            print "datum.bundle_items".upper(),datum.bundle_items            
+        #for datum in data:
+        #    datum.bundle_items=self._get_product_bundle_items(datum.product_id.id)
         res = [(x+1,obj) for x,obj in enumerate(data)]
         return res        
 
         return data
-    def _get_down_payment(self,data,context=None):
-        cr = self.cr
-        res=0.0
-        target_data={'type':data.billing_type,
-                     'amount':data.billing_extra_amount,
-                     'months':data.billing_months,
-                     'total':data.amount_total}
-        temp_bank=[#('whole amount'),
-         (['monthly by percentage','by percentage'],"res = target_data['total']*target_data['amount']/100"),
-         (['fixed amount'],"res = target_data['amount']"),
-         ]
-        for target_types,str_result in temp_bank:
-            if target_data['type'] in target_types:
-                exec str_result
-                
-#         if res:
-#             res  = "%.2f" % round(res,2)
-        return res 
-    
-        
-    def _get_balance(self,data,context=None):
-        cr = self.cr
-        dp = float(self._get_down_payment(data, context))
-        res = 0.0
-        if dp:
-            res = data.amount_total - dp
-#         if res:
-#             res  = "%.2f" % round(res,2)
-        return res
-        
-    def _get_monthly_payment(self,data,context=None):
-        cr = self.cr
-        res=0.0
-        if data.billing_months:
-            balance=float(self._get_balance(data, context))
-            res = balance / data.billing_months
-#         if res:
-#             res  = "%.2f" % round(res,2)            
-        return res
-        
+   
     def _get_designation(self,data,context=None):
         cr = self.cr
         uid = self.uid
@@ -143,8 +88,9 @@ class order(report_sxw.rml_parse):
             return False
         return group_id in [x.id for x in self.pool.get('res.users').browse(cr, uid, uid, context=context).groups_id]
 
-report_sxw.report_sxw('report.sale.order.inherit', 'sale.order', 'addons/glimsol_report/report/sale_order.rml', parser=order, header="external")
-report_sxw.report_sxw('report.sale.order.proforma.invoice', 'sale.order', 'addons/glimsol_report/report/proforma_invoice.rml', parser=order, header="external")
+report_sxw.report_sxw('report.sale.order.inherit', 'sale.order', 'addons/lc5_report_customizations/report/sale_order.rml', parser=order, header="external")
+report_sxw.report_sxw('report.sale.order', 'sale.order', 'addons/lc5_report_customizations/report/sale_order.rml', parser=order, header="external")
+#report_sxw.report_sxw('report.sale.order.proforma.invoice', 'sale.order', 'addons/lc5_report_customizations/report/proforma_invoice.rml', parser=order, header="external")
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

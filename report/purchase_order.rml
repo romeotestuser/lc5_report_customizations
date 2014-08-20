@@ -426,9 +426,11 @@
         </td>
       </tr>
     </blockTable>
+    <section>
+              <para style="P17">[[repeatIn(line_number(o.order_line),'line')]]</para>
+    
     <blockTable colWidths="77.0,231.0,77.0,77.0,77.0"  repeatRows="1"  style="Table16">
       <tr>
-          <para style="P17">[[repeatIn(line_number(o.order_line),'line')]]</para>
       
         <td>
           <para style="P2">
@@ -439,7 +441,7 @@
           <para style="P2">[[ line[1].product_id.name ]]</para>
         </td>
         <td>
-          <para style="P2">[[ "%.2f" % line[1].product_uom_qty ]]</para>
+          <para style="P2">[[ "%.2f" % line[1].product_qty ]]</para>
         </td>
         <td>
           <para style="P2">[[ line[1].price_unit or '0.00']]</para>
@@ -451,8 +453,28 @@
           <para style="P2">[[ line[1].price_subtotal or '0.00' ]]</para>
         </td>
       </tr>
+      <tr>
+       	<para style="P17">[[ repeatIn(line[1].bundle_items, 'component')]]</para>
+        <td>
+                <para style="P2">[[ component['line_number'] ]]</para>
+        </td>
+        <td>
+          <para style="P2">[[ component['item_id'][1] ]]</para>
+        </td>
+        <td>
+          <para style="P2">[[ component['qty_uom'] ]]</para>
+        </td>
+        <td>
+                <para style="P1">
+                  <font color="white"> </font>
+                </para>        </td>
+        <td>
+                <para style="P1">
+                  <font color="white"> </font>
+                </para>        </td>
+      </tr>      
     </blockTable>
-	
+	</section>
     <blockTable colWidths="539.0" style="Table10">
 		<tr>
 			<td>

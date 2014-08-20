@@ -246,7 +246,8 @@
     <paraStyle name="P16" fontName="Helvetica" fontSize="9.0" leading="10" alignment="LEFT"/>
     <paraStyle name="P17" fontName="Helvetica" alignment="CENTER"/>
     <paraStyle name="P18" fontName="Helvetica-Bold" fontSize="9.0" leading="10" alignment="LEFT"/>
-    <paraStyle name="P19" fontName="Helvetica-Bold" fontSize="3.0" leading="10" alignment="LEFT"/>
+    <paraStyle name="P19" fontName="Helvetica" fontSize="3.0" alignment="LEFT"/>
+    <paraStyle name="P20" fontName="Helvetica-Bold" fontSize="9.0" leading="10" alignment="CENTER"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="9.0" leading="10" spaceBefore="12.0" spaceAfter="6.0"/>
@@ -413,50 +414,59 @@
     <blockTable colWidths="77.0,231.0,77.0,77.0,77.0" style="Table15">
       <tr>
         <td>
-          <para style="P2">Item</para>
+          <para style="P20">Item</para>
         </td>
         <td>
-          <para style="P2">Product Description</para>
+          <para style="P18">Product Description</para>
         </td>
         <td>
-          <para style="P2">Quantity</para>
+          <para style="P20">Quantity</para>
         </td>
         <td>
-          <para style="P2">Unit Price</para>
+          <para style="P20">Unit Price</para>
         </td>
         <!--td>
           <para style="P2">Discount (%)</para>
         </td-->
         <td>
-          <para style="P2">Net Price</para>
+          <para style="P20">Net Price</para>
         </td>
       </tr>
     </blockTable>
     <section>
-              <para style="P17">[[repeatIn(line_number(o.order_line),'line')]]</para>
-    
+              <para style="P17">[[repeatIn(line_number(o.order_line),'line')]]</para>    
     <blockTable colWidths="77.0,231.0,77.0,77.0,77.0"  repeatRows="1"  style="Table16">
       <tr>
       
         <td>
-          <para style="P2">
-            <font face="Helvetica">[[ line[0] ]]</font>
-          </para>
+			<para style="P19"><font color="white"> </font></para>
+			<para style="P2">
+				<font face="Helvetica">[[ line[0] ]]</font>
+			</para>
+			<para style="P19"><font color="white"> </font></para>
         </td>
         <td>
-          <para style="P2">[[ line[1].product_id.name ]]</para>
+			<para style="P19"><font color="white"> </font></para>
+			<para style="P1">[[ line[1].product_id.name ]]</para>
+			<para style="P19"><font color="white"> </font></para>
         </td>
         <td>
-          <para style="P2">[[ "%.2f" % line[1].product_qty ]]</para>
+			<para style="P19"><font color="white"> </font></para>
+			<para style="P2">[[ "%.2f" % line[1].product_qty ]]</para>
+			<para style="P19"><font color="white"> </font></para>
         </td>
         <td>
-          <para style="P2">[[ line[1].price_unit or '0.00']]</para>
+			<para style="P19"><font color="white"> </font></para>
+			<para style="P2">[[ line[1].price_unit or '0.00']]</para>
+			<para style="P19"><font color="white"> </font></para>
         </td>
         <!--td>
           <para style="P2">[[ line[1].discount or "0.0" ]]</para>
         </td-->
         <td>
-          <para style="P2">[[ line[1].price_subtotal or '0.00' ]]</para>
+			<para style="P19"><font color="white"> </font></para>
+			<para style="P2">[[ line[1].price_subtotal or '0.00' ]]</para>
+			<para style="P19"><font color="white"> </font></para>
         </td>
       </tr>
       <tr>
@@ -479,9 +489,9 @@
                   <font color="white"> </font>
                 </para>        </td>
       </tr>      
-    </blockTable>
+     </blockTable>
 	</section>
-	
+
     <blockTable colWidths="539.0" style="Table10">
 		<tr>
 			<td>

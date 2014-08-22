@@ -53,6 +53,7 @@ class shipping(report_sxw.rml_parse):
             x['line_number']='.'.join([str(line_number),str(count+1)])
             result.append(x)
             temp_res = self._get_product_bundle_items(x['item_id'][0], x['qty_uom'], context,'.'.join([str(line_number),str(count+1)]))
+            print "temp_res".upper(), temp_res
             result.extend(temp_res)
 #         bundle_product_item_ids = [x[0] for x in cr.fetchall()]
 #         product_dicts=self.pool.get('product.product').read(cr,uid,bundle_product_item_ids,['name'])
@@ -70,9 +71,11 @@ class shipping(report_sxw.rml_parse):
         if not result:
             result=[]
         for sub_count,x in enumerate(datum.child_ids):
-            result.append('.'.join([str(count),str(sub_count+1)]))
+            counter = '.'.join([str(count),str(sub_count+1)])
+            result.append(counter)
             if x.child_ids:
-                result.extend(self.get_components_line(x, '.'.join([str(count),str(sub_count+1)]),result))
+                counter = '.'.join([str(count),str(sub_count+1)])
+                result.extend(self.get_components_line(x, counter))
         return result
     
     def _get_product_line_number(self,data,context=None):

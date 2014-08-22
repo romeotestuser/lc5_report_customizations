@@ -521,7 +521,7 @@
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="60.0,210.0,67.0,68.0,69.0,66.0"  repeatRows="1"  style="Table8">
+    <blockTable colWidths="60.0,210.0,67.0,68.0,69.0,66.0" style="Table8">
       <tr>
           <para style="P12">[[repeatIn(line_number(o.order_line),'line')]]</para>
       

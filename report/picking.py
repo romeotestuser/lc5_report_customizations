@@ -33,6 +33,7 @@ for x in ['report.stock.picking.list','report.stock.picking.list.in','report.sto
 
 class picking(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
+        
         super(picking, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
@@ -41,7 +42,6 @@ class picking(report_sxw.rml_parse):
             
         })
     def get_product_desc(self, move_line):
-        print "get_product_desc".upper()
         desc = move_line.product_id.name
         if move_line.product_id.default_code:
             desc = '[' + move_line.product_id.default_code + ']' + ' ' + desc
@@ -49,7 +49,6 @@ class picking(report_sxw.rml_parse):
     
             
     def get_components_line(self,datum,count,result=None,context=None):
-        print "get_components_line".upper()
         if not datum.child_ids:
             return []
         if not result:
@@ -63,7 +62,6 @@ class picking(report_sxw.rml_parse):
         return result
     
     def _get_product_line_number(self,data,context=None):
-        print "_get_product_line_number".upper()
         cr = self.cr
         #intigrate fetching of bundle items
         #fetch main products (not bundle components)

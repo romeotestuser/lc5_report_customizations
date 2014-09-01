@@ -566,7 +566,7 @@
                 <para style="P12">[[ component['line_number'] ]]</para>
         </td>
         <td>
-          <para style="P12">[[ component['item_id'][1] ]]</para>
+          <para style="P18">[[ component['item_id'][1] ]]</para>
         </td>
         <td>
           <para style="P12">[[ component['qty_uom'] ]]</para>

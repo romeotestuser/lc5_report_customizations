@@ -451,7 +451,7 @@
         </td>
         <td>
 			<para style="P19"><font color="white"> </font></para>
-			<para style="P2">[[ line[1].price_unit or '0.00']]</para>
+			<para style="P2">[[ o.company_id.currency_id.symbol ]] [[ line[1].price_unit or '0.00']]</para>
 			<para style="P19"><font color="white"> </font></para>
         </td>
         <!--td>
@@ -459,7 +459,7 @@
         </td-->
         <td>
 			<para style="P19"><font color="white"> </font></para>
-			<para style="P2">[[ line[1].price_subtotal or '0.00' ]]</para>
+			<para style="P2">[[ o.company_id.currency_id.symbol ]] [[ line[1].price_subtotal or '0.00' ]]</para>
 			<para style="P19"><font color="white"> </font></para>
         </td>
       </tr>
@@ -469,7 +469,7 @@
                 <para style="P2">[[ component['line_number'] ]]</para>
         </td>
         <td>
-          <para style="P2">[[ component['item_id'][1] ]]</para>
+          <para style="P1">[[ component['item_id'][1] ]]</para>
         </td>
         <td>
           <para style="P2">[[ component['qty_uom'] ]]</para>
